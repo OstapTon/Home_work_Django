@@ -1,4 +1,3 @@
-# views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from home_app.models import Client, Product, Order
 from home_app.forms import ClientForm, ProductForm, OrderForm
