@@ -19,3 +19,18 @@ class Product(models.Model):
 
     def __str__(self):
         return self.title
+
+class Order(models.Model):
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2)
+    order_date = models.DateField(auto_now_add=True)
+
+    def calculate_total_amount(self):
+        total = sum(product.price *
+                    product.quantity for product in self.products.all())
+        self.total_amount = total
+        self.save()
+
+    def __str__(self):
+        return f"Order {self.id} by {self.client.name}"
